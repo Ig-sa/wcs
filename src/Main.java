@@ -137,7 +137,9 @@ class Program {
 						if ((System.currentTimeMillis() - load.TimeOfLastAction) > MILLIS_BETWEEN_ACTIONS)
 							load.DoNext();
 
-				if ((new Date().getMinutes() % 5 == 0) && ((System.currentTimeMillis() - TimeSinceLastPrint) > 180))
+				Date currentTime = new Date();
+				if ((currentTime.getMinutes() % 5 == 0) && (currentTime.getSeconds() > 5)
+						&& ((System.currentTimeMillis() - TimeSinceLastPrint) > 180000))
 					PrintStatisticData();
 
 				Thread.sleep(INFINITE_LOOP_WAIT_LAPSE);
@@ -184,7 +186,7 @@ class Program {
 			LoadsInAisle[i] = 0;
 			LoadsOutAisle[i] = 0;
 		}
-		
+
 		TimeSinceLastPrint = System.currentTimeMillis();
 	}
 }
