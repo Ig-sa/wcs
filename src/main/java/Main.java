@@ -110,8 +110,8 @@ class Program {
 	public static long TimeSinceLastPrint = System.currentTimeMillis();
 
 	int MAX_LOADS_IN_SYSTEM = 10;
-	long GENERATION_TIME = 3600;// Long.MAX_VALUE;
-	int MILLIS_BETWEEN_ACTIONS = 7500;
+	long GENERATION_TIME = 7200;// Long.MAX_VALUE;
+	int MILLIS_BETWEEN_ACTIONS = 10000;
 	int INFINITE_LOOP_WAIT_LAPSE = 1000;
 	int LOAD_MAX_NUM_DESTINATIONS = 3;
 
