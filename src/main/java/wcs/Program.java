@@ -1,26 +1,12 @@
-package main.java;
+package main.java.wcs;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Random;
-import java.lang.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
-public class Main {
-	public static void main(String args[]) {
-		MySQLConnection.EstablishConnection();
-		MySQLConnection.ClearDB();
-
-		(new Program()).run();
-
-		MySQLConnection.EndConnection();
-	}
-}
-
-class Program {
-	class Load {
+public class Program {
+	public class Load {
 		public int Id;
 		public LinkedList<Integer> Destinations = new LinkedList<>();
 		public long TimeOfLastAction;
@@ -109,9 +95,9 @@ class Program {
 	public static int[] LoadsCurrentInAisle = new int[4];
 	public static long TimeSinceLastPrint = System.currentTimeMillis();
 
-	int MAX_LOADS_IN_SYSTEM = 10;
-	long GENERATION_TIME = 7200;// Long.MAX_VALUE;
-	int MILLIS_BETWEEN_ACTIONS = 10000;
+	int MAX_LOADS_IN_SYSTEM = 20;
+	long GENERATION_TIME = 14400;// Long.MAX_VALUE;
+	int MILLIS_BETWEEN_ACTIONS = 15000;
 	int INFINITE_LOOP_WAIT_LAPSE = 1000;
 	int LOAD_MAX_NUM_DESTINATIONS = 3;
 
@@ -187,51 +173,5 @@ class Program {
 		}
 
 		TimeSinceLastPrint = System.currentTimeMillis();
-	}
-}
-
-class MySQLConnection {
-	public static Connection MySQLConn;
-
-	public static void EstablishConnection() {
-		try {
-			MySQLConnection.MySQLConn = DriverManager.getConnection(
-					"jdbc:mysql://wcsdb.c244jcopnv7v.eu-west-3.rds.amazonaws.com:3306/wcsdb?user=admin&password=adminWCSDB");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public static void EndConnection() {
-		try {
-			MySQLConnection.MySQLConn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public static void ClearDB() {
-		try {
-			MySQLConnection.MySQLConn.createStatement().execute("DELETE FROM AisleMovements");
-			MySQLConnection.MySQLConn.createStatement().execute("DELETE FROM LoadsInAisle");
-			MySQLConnection.MySQLConn.createStatement().execute("DELETE FROM LoadsInSystem");
-			MySQLConnection.MySQLConn.createStatement().execute("DELETE FROM StorageMovements");
-			MySQLConnection.MySQLConn.createStatement().execute("DELETE FROM AisleMovementsAvg");
-			MySQLConnection.MySQLConn.createStatement().execute("DELETE FROM LoadsInSystemAvg");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public static void ExecuteInsert(String sql) {
-		try {
-			MySQLConnection.MySQLConn.createStatement().execute(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
